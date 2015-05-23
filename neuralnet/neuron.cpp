@@ -1,8 +1,14 @@
 #include "neuralnet.h"
 
-Neuron::Neuron(int num_inputs, float initial_weight)
-  : weights(num_inputs, initial_weight),
-  output(0) {}
+Neuron::Neuron(int num_inputs)
+  : weights(num_inputs),
+  output(0)
+  {
+    for(int i = 0; i < num_inputs; i++)
+    {
+      weights[i] = randomWeight();
+    }
+  }
 
 void Neuron::set_weights(std::vector<float> w)
 {
@@ -35,5 +41,11 @@ void Neuron::update(std::vector<float> inputs)
   }
 
   output = NeuralNetwork::nonlinearFunction(sum);
+}
+
+float randomWeight()
+{
+  float w = static_cast <float> (rand()) / static_cast <float> (RAND_MAX);
+  return w;
 }
 

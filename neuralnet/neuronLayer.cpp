@@ -3,7 +3,7 @@
 NeuronLayer::NeuronLayer(int layer_s, int num_inputs)
   : layer_size (layer_s)
 {
-  Neuron n (num_inputs, INITIAL_WEIGHT); // Initial neuron to use at each position
+  Neuron n (num_inputs); // Initial neuron to use at each position
   neurons = std::vector<Neuron> (layer_s, n);
 }
 

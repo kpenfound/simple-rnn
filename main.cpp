@@ -1,31 +1,33 @@
-#include "neuralnet/neuralnet.h"
+#include "recurrent.h"
+#include <iostream>
 
 int main(void)
 {
-  NeuralNetwork nn (INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE);
+  srand(43); // Seed random
 
-  std::vector<float> inputs(INPUT_SIZE);
+  int iterations = 1000; // Number of generations
+
+  std::vector<float> inputs(INPUT_SIZE); // Network input
   inputs[0] = 0.1;
   inputs[1] = 0.1;
   inputs[2] = 0.9;
-  std::vector<float> targets(OUTPUT_SIZE);
+
+  std::vector<float> targets(OUTPUT_SIZE); // Expected network output
   targets[0] = 1;
   targets[1] = 0;
   targets[2] = 1;
-  int iterations = 100;
 
-  nn.set_inputs(inputs);
+  RecurrentNeuralNetwork rnn = RecurrentNeuralNetwork();
 
   for(int i = 0; i < iterations; i++)
   {
-    nn.update();
-    nn.backpropagate(targets);
+    rnn.update(inputs);
+    rnn.train(targets);
   }
 
-  std::vector<float> out = nn.get_outputs();
-
-  for(int i = 0; i < out.size(); i++)
+  std::vector<float> outputs = rnn.get_outputs();
+  for(int i = 0; i < outputs.size(); i++)
   {
-    std::cout << out[i] << std::endl;
+    std::cout << outputs[i] << std::endl;
   }
 }
