@@ -1,6 +1,7 @@
 #ifndef __NEURALNET_H__
 #define __NEURALNET_H__
 #include <vector>
+#include <iostream>
 #include <cmath>
 
 const int INPUT_SIZE = 3;
@@ -27,7 +28,8 @@ class NeuronLayer
   public:
     NeuronLayer(int,int);
     int get_size();
-    Neuron* get_neuron(int);
+    Neuron get_neuron(int);
+    void set_neuron(int, Neuron);
     void update(std::vector<float>);
     std::vector<float> get_outputs();
 };

@@ -12,13 +12,22 @@ int NeuronLayer::get_size()
   return neurons.size();
 }
 
-Neuron* NeuronLayer::get_neuron(int idx)
+Neuron NeuronLayer::get_neuron(int idx)
 {
   if(idx >= neurons.size())
   {
     throw "Neuron index out of bounds!";
   }
-  return &(neurons[idx]);
+  return neurons[idx];
+}
+
+void NeuronLayer::set_neuron(int idx, Neuron n)
+{
+  if(idx >= neurons.size())
+  {
+    throw "Neuron index out of bounds!";
+  }
+  neurons[idx] = n;
 }
 
 void NeuronLayer::update(std::vector<float> inputs)

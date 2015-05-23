@@ -1,4 +1,3 @@
-#include <iostream>
 #include "neuralnet/neuralnet.h"
 
 int main(void)
@@ -6,14 +5,14 @@ int main(void)
   NeuralNetwork nn (INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE);
 
   std::vector<float> inputs(INPUT_SIZE);
-  inputs[0] = 0.2;
-  inputs[1] = 1.4;
-  inputs[2] = 2.1;
-  std::vector<float> targets(OUTPUT_SIZE);
-  inputs[0] = 0.8;
+  inputs[0] = 0.1;
   inputs[1] = 0.1;
-  inputs[2] = 0.2;
-  int iterations = 1;
+  inputs[2] = 0.9;
+  std::vector<float> targets(OUTPUT_SIZE);
+  targets[0] = 1;
+  targets[1] = 0;
+  targets[2] = 1;
+  int iterations = 100;
 
   nn.set_inputs(inputs);
 
