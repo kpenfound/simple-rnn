@@ -2,14 +2,15 @@
 
 RecurrentNeuralNetwork::RecurrentNeuralNetwork()
   : rnn (NUM_LAYERS, std::vector<NeuralNetwork> (LAYER_SIZE, NeuralNetwork(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE))),
-  outputs (OUTPUT_SIZE) {}
+  outputs (LAYER_SIZE, std::vector<float> (OUTPUT_SIZE)) {}
 
-void RecurrentNeuralNetwork::update(std::vector<float> in)
+void RecurrentNeuralNetwork::update(std::vector< std::vector<float> > * inputVector)
 {
   for(int i = 0; i < NUM_LAYERS; i++)
   {
     for(int j = 0; j < LAYER_SIZE; j++)
     {
+      std::vector<float> in (inputVector->at(j));
       if(i > 0)
       {
         in = rnn[i-1][j].get_outputs();
@@ -20,19 +21,22 @@ void RecurrentNeuralNetwork::update(std::vector<float> in)
       }
       rnn[i][j].set_inputs(in);
       rnn[i][j].update();
+      outputs[j] = rnn[i][j].get_outputs();
     }
   }
-  outputs = rnn[NUM_LAYERS - 1][LAYER_SIZE - 1].get_outputs();
 }
 
-std::vector<float> RecurrentNeuralNetwork::get_outputs()
+std::vector< std::vector<float> > RecurrentNeuralNetwork::get_outputs()
 {
   return outputs;
 }
 
-void RecurrentNeuralNetwork::train(std::vector<float> target)
+void RecurrentNeuralNetwork::train(std::vector< std::vector<float> > targets)
 {
-  rnn[NUM_LAYERS - 1][LAYER_SIZE - 1].backpropagate(target);
+  for(int i = 0; i < LAYER_SIZE; i++)
+  {
+    rnn[NUM_LAYERS - 1][i].backpropagate(targets[i]);
+  }
 }
 
 std::vector<float> vectorMultiplication(std::vector<float> a, std::vector<float> b)
