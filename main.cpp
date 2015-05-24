@@ -42,7 +42,6 @@ int main(void)
     rnn.train(targets);
   }
 
-  std::cout << "Made it!" << std::endl;
   std::vector< std::vector<float> > outputs = rnn.get_outputs();
   for(int i = 0; i < outputs.size(); i++)
   {
