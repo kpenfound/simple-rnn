@@ -27,6 +27,7 @@ public:
   Neuron get_neuron(int);
   void set_neuron(int, Neuron);
   void update(std::vector<float>);
+  void update(std::vector<float>, std::vector<float>);
   std::vector<float> get_outputs();
 };
 
@@ -39,7 +40,8 @@ public:
   NeuralNetwork(int,int,int);
   void set_inputs(std::vector<float>);
   std::vector<float> get_outputs();
-  void update();
+  std::vector<float> get_hidden_outputs();
+  void update(std::vector<float>);
   static float nonlinearFunction(float);
   static float nonlinearDerivative(float);
   void backpropagate(std::vector<float>);

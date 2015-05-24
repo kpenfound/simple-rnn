@@ -2,7 +2,7 @@
 
 NeuralNetwork::NeuralNetwork(int input_s, int hidden_s, int output_s)
   : inputs(input_s, 1.0),
-  hidden_layer(hidden_s, input_s),
+  hidden_layer(hidden_s, input_s + 1), // + 1 for left input
   output_layer(output_s, hidden_s) {}
 
 void NeuralNetwork::set_inputs(std::vector<float> in)
@@ -16,9 +16,15 @@ std::vector<float> NeuralNetwork::get_outputs()
   return outs;
 }
 
-void NeuralNetwork::update()
+std::vector<float> NeuralNetwork::get_hidden_outputs()
 {
-  hidden_layer.update(inputs);
+  std::vector<float> outs = hidden_layer.get_outputs();
+  return outs;
+}
+
+void NeuralNetwork::update(std::vector<float> left)
+{
+  hidden_layer.update(inputs, left);
   output_layer.update(hidden_layer.get_outputs());
 }
 
@@ -36,7 +42,7 @@ void NeuralNetwork::backpropagate(std::vector<float> expected)
 {
   int output_size = output_layer.get_size();
   int hidden_size = hidden_layer.get_size();
-  int input_size = inputs.size();
+  int input_size = inputs.size() + 1; // + 1 for left side input
   std::vector<float> output_error (output_size);
   std::vector<float> hidden_error (hidden_size);
 

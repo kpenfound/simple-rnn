@@ -26,6 +26,4 @@ public:
   void train(std::vector< std::vector<float> >);
 };
 
-std::vector<float> vectorMultiplication(std::vector<float>, std::vector<float>);
-
 #endif // __RECURRENT_H__

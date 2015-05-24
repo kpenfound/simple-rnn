@@ -6,22 +6,23 @@ RecurrentNeuralNetwork::RecurrentNeuralNetwork()
 
 void RecurrentNeuralNetwork::update(std::vector< std::vector<float> > * inputVector)
 {
-  for(int i = 0; i < NUM_LAYERS; i++)
+  for(int i = 0; i < NUM_LAYERS; i++) // Loop through the layers of networks
   {
-    for(int j = 0; j < LAYER_SIZE; j++)
+    for(int j = 0; j < LAYER_SIZE; j++) // Loop through each network in this layer
     {
-      std::vector<float> in (inputVector->at(j));
-      if(i > 0)
+      std::vector<float> in (inputVector->at(j)); // The input for this network
+      std::vector<float> left (HIDDEN_SIZE, 0); // The incoming left-side input for this network
+      if(i > 0) // In a multi-layer situation, our inputs will be the outputs of the previous layer
       {
         in = rnn[i-1][j].get_outputs();
       }
-      if(j > 0)
+      if(j > 0) // Our left side inputs will be the hidden_layer outputs of the network to the left
       {
-        in = vectorMultiplication(in, rnn[i][j-1].get_outputs());
+        left = rnn[i][j-1].get_hidden_outputs();
       }
       rnn[i][j].set_inputs(in);
-      rnn[i][j].update();
-      outputs[j] = rnn[i][j].get_outputs();
+      rnn[i][j].update(left); // Execute network
+      outputs[j] = rnn[i][j].get_outputs(); // Update our outputs holder with this network's output
     }
   }
 }
@@ -37,15 +38,4 @@ void RecurrentNeuralNetwork::train(std::vector< std::vector<float> > targets)
   {
     rnn[NUM_LAYERS - 1][i].backpropagate(targets[i]);
   }
-}
-
-std::vector<float> vectorMultiplication(std::vector<float> a, std::vector<float> b)
-{
-  int res_size = std::min(a.size(), b.size());
-  std::vector<float> result_vector (res_size);
-  for(int i = 0; i < res_size; i++)
-  {
-    result_vector[i] = a[i] * b[i];
-  }
-  return result_vector;
 }

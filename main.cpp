@@ -5,7 +5,7 @@ int main(void)
 {
   srand(43); // Seed random
 
-  int iterations = 10; // Number of generations
+  int iterations = 100; // Number of generations
 
   const float zero[] = {0, 0, 0};
   std::vector<float> v_zero (zero, zero + sizeof(zero) / sizeof(float));
