@@ -17,12 +17,6 @@ int main(void)
   std::vector<float> v_three (three, three + sizeof(three) / sizeof(float));
   const float four[] = {0, 0, 1};
   std::vector<float> v_four (four, four + sizeof(four) / sizeof(float));
-  const float five[] = {1, 0, 1};
-  std::vector<float> v_five (five, five + sizeof(five) / sizeof(float));
-  const float six[] = {0, 1, 1};
-  std::vector<float> v_six (six, six + sizeof(six) / sizeof(float));
-  const float seven[] = {1, 1, 1};
-  std::vector<float> v_seven (seven, seven + sizeof(seven) / sizeof(float));
 
   std::vector< std::vector<float> > inputs(LAYER_SIZE); // Network input
   inputs[0] = v_one;
