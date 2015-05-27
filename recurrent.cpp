@@ -1,9 +1,11 @@
 #include "recurrent.h"
 
+// Basic constructor using defined constants
 RecurrentNeuralNetwork::RecurrentNeuralNetwork()
   : rnn (NUM_LAYERS, std::vector<NeuralNetwork> (LAYER_SIZE, NeuralNetwork(INPUT_SIZE, HIDDEN_SIZE, OUTPUT_SIZE))),
   outputs (LAYER_SIZE, std::vector<float> (OUTPUT_SIZE)) {}
 
+// Executes the network for a given input set
 void RecurrentNeuralNetwork::update(std::vector< std::vector<float> > * inputVector)
 {
   for(int i = 0; i < NUM_LAYERS; i++) // Loop through the layers of networks
@@ -27,11 +29,13 @@ void RecurrentNeuralNetwork::update(std::vector< std::vector<float> > * inputVec
   }
 }
 
+// Returns output set
 std::vector< std::vector<float> > RecurrentNeuralNetwork::get_outputs()
 {
   return outputs;
 }
 
+// Trains network with backpropagation training for a given target output set
 void RecurrentNeuralNetwork::train(std::vector< std::vector<float> > targets)
 {
   for(int i = 0; i < LAYER_SIZE; i++)

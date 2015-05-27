@@ -1,6 +1,12 @@
 #include "recurrent.h"
 #include <iostream>
 
+/*
+  Main executes a simple example use of our RNN.
+  Using 0,1,2,3,4 as 3 bit binary numbers, we teach our
+  network to recognize the sequence.  In the example seen
+  here, we will train a single test case of 1,2,3->2,3,4
+*/
 int main(void)
 {
   srand(43); // Seed random
@@ -30,12 +36,14 @@ int main(void)
 
   RecurrentNeuralNetwork rnn = RecurrentNeuralNetwork();
 
+  // Execution loop: Execute network and then train with backpropagation
   for(int i = 0; i < iterations; i++)
   {
     rnn.update(&inputs);
     rnn.train(targets);
   }
 
+  // Display outputs of the network after iterations have completed
   std::vector< std::vector<float> > outputs = rnn.get_outputs();
   for(int i = 0; i < outputs.size(); i++)
   {
